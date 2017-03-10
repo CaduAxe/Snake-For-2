@@ -6,15 +6,15 @@
 package Classes.Mapa;
 
 import Classes.Cobra.Cobra;
+import Classes.Cobra.KeyMov;
+import Classes.Cobra.Player;
 import Interface.GameOfSeankers;
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.swing.Timer;
 
@@ -27,8 +27,8 @@ public class Mapa
 
     ArrayList<Point> points = new ArrayList<>();
 
-    private final Cobra cobraAzul = new Cobra(new Color(135, 206, 250), true);
-    private final Cobra cobraVermelha = new Cobra(new Color(255, 160, 122), false);
+    private final Cobra cobraAzul = new Player(KeyMov.WASD, new Color(135, 206, 250), true);
+    private final Cobra cobraVermelha = new Player(KeyMov.Arrays, new Color(255, 160, 122), false);
 
     private final boolean repintar = true;
 
@@ -67,7 +67,7 @@ public class Mapa
     public boolean InMapVermelho()
     {
         cobraVermelha.NoMapa(cobraAzul);
-        
+
         if (comida != null)
         {
             if (cobraVermelha.getCabecaLocal().distance(comida) == 0d)
@@ -86,10 +86,12 @@ public class Mapa
     public ArrayList<Point> getVoidPoints()
     {
         ArrayList<Point> vazios = new ArrayList<>(
-                points.stream().filter((t) ->
+                points.stream().filter((t)
+                        ->
                 {
                     test = true;
-                    cobraAzul.getLocais().forEach((Point r) ->
+                    cobraAzul.getLocais().forEach((Point r)
+                            ->
                     {
                         if (t.getLocation().equals(r.getLocation()))
                         {
@@ -97,8 +99,9 @@ public class Mapa
                             test = false;
                         }
                     });
-                    
-                    cobraVermelha.getLocais().forEach((Point r) ->
+
+                    cobraVermelha.getLocais().forEach((Point r)
+                            ->
                     {
                         if (t.getLocation().equals(r.getLocation()))
                         {
@@ -106,8 +109,7 @@ public class Mapa
                             test = false;
                         }
                     });
-                    
-                    
+
                     return test; //To change body of generated lambdas, choose Tools | Templates.
                 }).collect(Collectors.toList()));
         return vazios;

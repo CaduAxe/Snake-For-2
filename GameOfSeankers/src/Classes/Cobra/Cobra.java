@@ -4,25 +4,21 @@ import Classes.Cobra.LocalCobra.Point;
 import Classes.Cobra.DirecaoCobra.Direcao;
 import java.awt.Color;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 public class Cobra
 {
 
     private Color cor;
 
-    private Direcao direcao = Direcao.Direita;
+    protected Direcao direcao = Direcao.Direita;
     private final ArrayList<Point> locais = new ArrayList<>();
 
     private boolean comeu = false;
     private Point novoRabo = null;
 
     private boolean dead = false;
-    private boolean virar = false;
-
-    private boolean um;
+    protected boolean virar = false;
 
     public Cobra(Color cor, boolean um)
     {
@@ -37,7 +33,6 @@ public class Cobra
 
         }
         this.cor = cor;
-        this.um = um;
     }
 
     public void move()
@@ -75,74 +70,7 @@ public class Cobra
 
     public void alterDirecao(int tecla)
     {
-        if (!virar && tecla != direcao.getCode(um))
-        {
-            virar = true;
-            if (um)
-            {
-                switch (tecla)
-                {
-                    case KeyEvent.VK_W:
-                        if (direcao != Direcao.Baixo)
-                        {
-                            direcao = Direcao.Cima;
-                        }
-                        break;
-                    case KeyEvent.VK_A:
-                        if (direcao != Direcao.Direita)
-                        {
-                            direcao = Direcao.Esquerda;
-                        }
-                        break;
-                    case KeyEvent.VK_S:
-                        if (direcao != Direcao.Cima)
-                        {
-                            direcao = Direcao.Baixo;
-                        }
-                        break;
-                    case KeyEvent.VK_D:
-                        if (direcao != Direcao.Esquerda)
-                        {
-                            direcao = Direcao.Direita;
-                        }
-                        break;
-                    default:
-                        virar = false;
-                }
-            } else
-            {
-                switch (tecla)
-                {
-                    case KeyEvent.VK_UP:
-                        if (direcao != Direcao.Baixo)
-                        {
-                            direcao = Direcao.Cima;
-                        }
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        if (direcao != Direcao.Direita)
-                        {
-                            direcao = Direcao.Esquerda;
-                        }
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        if (direcao != Direcao.Cima)
-                        {
-                            direcao = Direcao.Baixo;
-                        }
-                        break;
-                    case KeyEvent.VK_RIGHT:
-                        if (direcao != Direcao.Esquerda)
-                        {
-                            direcao = Direcao.Direita;
-                        }
-                        break;
-                    default:
-                        virar = false;
-                }
 
-            }
-        }
     }
 
     public void NoMapa(Cobra adversario)
@@ -161,7 +89,8 @@ public class Cobra
             {
                 System.out.println("asd");
                 dead();
-                if(adversario.getLocais().size() == getLocais().size()){
+                if (adversario.getLocais().size() == getLocais().size())
+                {
                     adversario.dead();
                 }
             }
@@ -180,7 +109,7 @@ public class Cobra
     void dead()
     {
         dead = true;
-        cor = new Color(255,0,0);
+        cor = new Color(255, 0, 0);
     }
 
     public boolean isDead()
